@@ -1,6 +1,5 @@
 import database.DatabaseManager;
 import database.UserRepository;
-import controller.LoginController;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -17,9 +16,6 @@ public class AeroclubApp extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/login.fxml"));
 
         Scene scene = new Scene(loader.load());
-
-        LoginController controller = loader.getController();
-        controller.setUserRepository(repo);
 
         primaryStage.setTitle("Aéroclub - Login");
         primaryStage.setScene(scene);

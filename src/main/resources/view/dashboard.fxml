@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.DashboardController"
+            prefHeight="600.0" prefWidth="800.0">
+
+    <left>
+        <VBox spacing="10" style="-fx-background-color: #2c3e50; -fx-min-width: 200;">
+            <padding>
+                <Insets top="20" right="10" bottom="20" left="10"/>
+            </padding>
+            <Label text="AÉROCLUB" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 20;"/>
+            <Separator/>
+            <Button text="Gestion des Avions" maxWidth="Infinity" style="-fx-cursor: hand;"/>
+            <Button text="Liste des Membres" maxWidth="Infinity" style="-fx-cursor: hand;"/>
+            <Region VBox.vgrow="ALWAYS" /> <Button text="Déconnexion" onAction="#handleLogout" maxWidth="Infinity" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-cursor: hand;"/>
+        </VBox>
+    </left>
+
+    <center>
+        <VBox alignment="CENTER" spacing="20">
+            <Label text="Bienvenue sur le tableau de bord" style="-fx-font-size: 24;"/>
+            <Label fx:id="welcomeLabel" text="Connecté en tant qu'administrateur" style="-fx-text-fill: gray;"/>
+        </VBox>
+    </center>
+
+</BorderPane>
