@@ -11,18 +11,27 @@ import java.io.IOException;
 
 public class DashboardController {
 
-    @FXML
-    private Label welcomeLabel;
+    @FXML private Label welcomeLabel;
+    @FXML private BorderPane mainPane;
 
-    @FXML
-    private BorderPane mainPane; // Assure-toi d'avoir mis fx:id="mainPane" sur ton BorderPane dans dashboard.fxml
+    // Méthodes de navigation
+    @FXML private void showAvionsPage() { loadPage("/view/avions.fxml"); }
+    @FXML private void showMembresPage() { loadPage("/view/membres.fxml"); }
+    @FXML private void showVolsPage() { loadPage("/view/vols.fxml"); }
+    @FXML private void showReservationsPage() { loadPage("/view/reservations.fxml"); }
+    @FXML private void showOperationsPage() { loadPage("/view/operations.fxml"); }
+    @FXML private void showCotisationsPage() { loadPage("/view/cotisations.fxml"); }
 
-    @FXML
-    private void showMembresPage() {
+    /**
+     * Méthode générique pour charger une page FXML au centre du BorderPane
+     */
+    private void loadPage(String fxmlPath) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/membres.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent root = loader.load();
             mainPane.setCenter(root);
         } catch (IOException e) {
+            System.err.println("Erreur de chargement de la page : " + fxmlPath);
             e.printStackTrace();
         }
     }
@@ -30,16 +39,13 @@ public class DashboardController {
     @FXML
     private void handleLogout() {
         try {
-            // Recharger la page de login
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/login.fxml"));
-            Parent root = loader.load();
-
-            // Récupérer la fenêtre actuelle
-            Stage stage = (Stage) welcomeLabel.getScene().getWindow();
+            Parent root = FXMLLoader.load(getClass().getResource("/view/login.fxml"));
+            // Utilisation du mainPane pour récupérer la fenêtre (plus fiable)
+            Stage stage = (Stage) mainPane.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("Aéroclub - Connexion");
+            stage.centerOnScreen();
             stage.show();
-
         } catch (IOException e) {
             e.printStackTrace();
         }

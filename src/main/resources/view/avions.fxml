@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="15" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="controller.AvionsController">
+    <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+
+    <HBox alignment="CENTER_LEFT" spacing="20">
+        <Label text="Gestion de la Flotte" style="-fx-font-size: 24; -fx-font-weight: bold;"/>
+        <Region HBox.hgrow="ALWAYS" />
+        <Button text="Rafraîchir" onAction="#initialize" />
+    </HBox>
+
+    <TableView fx:id="avionsTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colId" text="ID" prefWidth="40"/>
+            <TableColumn fx:id="colImmat" text="Immatriculation" prefWidth="120"/>
+            <TableColumn fx:id="colModele" text="Modèle" prefWidth="150"/>
+            <TableColumn fx:id="colCat" text="Catégorie" prefWidth="80"/> <TableColumn fx:id="colStatut" text="Statut" prefWidth="100"/>
+            <TableColumn fx:id="colHeures" text="Heures Vol" prefWidth="90"/>
+        </columns>
+    </TableView>
+</VBox>
