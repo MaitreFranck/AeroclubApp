@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="15" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="controller.ReservationsController">
+    <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+
+    <Label text="Planning des Réservations" style="-fx-font-size: 24; -fx-font-weight: bold;"/>
+
+    <TableView fx:id="reservationsTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colDate" text="Date" prefWidth="100"/>
+            <TableColumn fx:id="colAvion" text="Avion" prefWidth="100"/>
+            <TableColumn fx:id="colMembre" text="Pilote" prefWidth="150"/>
+            <TableColumn fx:id="colDebut" text="Début" prefWidth="80"/>
+            <TableColumn fx:id="colFin" text="Fin" prefWidth="80"/>
+            <TableColumn fx:id="colStatut" text="Statut" prefWidth="100"/>
+        </columns>
+    </TableView>
+</VBox>

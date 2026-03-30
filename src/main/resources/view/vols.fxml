@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="15" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="controller.VolsController">
+    <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+
+    <Label text="Historique des Vols Effectués" style="-fx-font-size: 24; -fx-font-weight: bold;"/>
+
+    <TableView fx:id="volsTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colId" text="ID" prefWidth="40"/>
+            <TableColumn fx:id="colAvion" text="Avion" prefWidth="100"/>
+            <TableColumn fx:id="colPilote" text="Pilote" prefWidth="150"/>
+            <TableColumn fx:id="colDepart" text="Départ" prefWidth="180"/>
+            <TableColumn fx:id="colArrivee" text="Arrivée" prefWidth="180"/>
+            <TableColumn fx:id="colDuree" text="Durée (h)" prefWidth="80"/>
+        </columns>
+    </TableView>
+</VBox>

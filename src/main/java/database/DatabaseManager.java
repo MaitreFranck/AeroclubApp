@@ -69,6 +69,38 @@ public class DatabaseManager {
                 stmt.execute(sql);
             }
 
+            // À ajouter dans DatabaseManager.initDatabase()
+            String createResaSQL = "CREATE TABLE IF NOT EXISTS reservations (" +
+                    "id INT PRIMARY KEY AUTO_INCREMENT, " +
+                    "id_avion INT, " +
+                    "id_membre INT, " +
+                    "date_reservation DATE, " +
+                    "heure_debut TIME, " +
+                    "heure_fin TIME, " +
+                    "statut ENUM('confirmee','annulee') DEFAULT 'confirmee');";
+
+            String insertResaData = "INSERT INTO reservations (id_avion, id_membre, date_reservation, heure_debut, heure_fin, statut) " +
+                    "SELECT 1, 1, '2026-04-10', '09:00:00', '11:00:00', 'confirmee' " +
+                    "WHERE NOT EXISTS (SELECT 1 FROM reservations WHERE id=1);";
+
+            stmt.execute(createResaSQL);
+            stmt.execute(insertResaData);
+
+            String createOpSQL = "CREATE TABLE IF NOT EXISTS operations (" +
+                    "id INT PRIMARY KEY AUTO_INCREMENT, " +
+                    "id_membre INT, " +
+                    "date_op TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +
+                    "montant DECIMAL(10,2), " +
+                    "type_op ENUM('debit', 'credit'), " +
+                    "mode_paiement VARCHAR(50));";
+
+            String insertOpData = "INSERT INTO operations (id_membre, montant, type_op, mode_paiement) " +
+                    "SELECT 1, 150.00, 'credit', 'Carte Bancaire' " +
+                    "WHERE NOT EXISTS (SELECT 1 FROM operations WHERE id=1);";
+
+            stmt.execute(createOpSQL);
+            stmt.execute(insertOpData);
+
             System.out.println("[DB] Initialisation complète avec données de vol.");
 
         } catch (SQLException e) {

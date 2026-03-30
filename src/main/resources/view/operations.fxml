@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="15" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="controller.OperationsController">
+    <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Journal de Caisse" style="-fx-font-size: 24; -fx-font-weight: bold;"/>
+        <Region HBox.hgrow="ALWAYS" />
+        <Button text="+ Nouvelle Opération" style="-fx-background-color: #27ae60; -fx-text-fill: white;"/>
+    </HBox>
+
+    <TableView fx:id="operationsTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colId" text="ID" prefWidth="50"/>
+            <TableColumn fx:id="colMembre" text="Membre" prefWidth="150"/>
+            <TableColumn fx:id="colDate" text="Date" prefWidth="180"/>
+            <TableColumn fx:id="colMontant" text="Montant (€)" prefWidth="100"/>
+            <TableColumn fx:id="colType" text="Type" prefWidth="100"/>
+            <TableColumn fx:id="colMode" text="Paiement" prefWidth="120"/>
+        </columns>
+    </TableView>
+</VBox>
