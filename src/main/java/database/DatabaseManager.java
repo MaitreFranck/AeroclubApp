@@ -51,10 +51,27 @@ public class DatabaseManager {
                 // La colonne existe déjà probablement, on ignore l'erreur
             }
 
-            // 3. Insertion de l'admin par défaut
-            stmt.executeUpdate("INSERT INTO membres (nom, prenom, email, password, droits_utilisateurs, statut) " +
+            // 1. Insertion de l'ADMIN (Accès total)
+            String insertAdminSQL = "INSERT INTO membres (nom, prenom, email, password, droits_utilisateurs, statut) " +
                     "SELECT 'Admin', 'Aeroclub', 'admin', '123', 'administrateur', 'actif' " +
-                    "WHERE NOT EXISTS (SELECT 1 FROM membres WHERE email = 'admin');");
+                    "WHERE NOT EXISTS (SELECT 1 FROM membres WHERE email = 'admin');";
+
+            // 2. Insertion du CONSULTEUR (Accès lecture seule au dashboard)
+            String insertConsulteurSQL = "INSERT INTO membres (nom, prenom, email, password, droits_utilisateurs, statut) " +
+                    "SELECT 'Dupont', 'Jean', 'consul', '123', 'consulteur', 'actif' " +
+                    "WHERE NOT EXISTS (SELECT 1 FROM membres WHERE email = 'consul');";
+
+            // 3. Insertion de l'UTILISATEUR (Sera redirigé vers le site web)
+            String insertUserSQL = "INSERT INTO membres (nom, prenom, email, password, droits_utilisateurs, statut) " +
+                    "SELECT 'Martin', 'Lucas', 'user', '123', 'utilisateur', 'actif' " +
+                    "WHERE NOT EXISTS (SELECT 1 FROM membres WHERE email = 'user');";
+
+            stmt.executeUpdate(insertAdminSQL);
+            stmt.executeUpdate(insertConsulteurSQL);
+            stmt.executeUpdate(insertUserSQL);
+
+            System.out.println("[DB] Comptes de test (admin, consul, user) initialisés.");
+
 
             // 4. Insertion des données réelles du fichier SQL
             // On sépare les inserts pour plus de fiabilité
@@ -86,6 +103,19 @@ public class DatabaseManager {
             stmt.execute(createResaSQL);
             stmt.execute(insertResaData);
 
+            String createVolsSQL = "CREATE TABLE IF NOT EXISTS vols (" +
+                    "id INT PRIMARY KEY AUTO_INCREMENT, " +
+                    "id_avion INT, " +
+                    "id_pilote INT, " +
+                    "date_heure_depart TIMESTAMP, " +
+                    "date_heure_arrivee TIMESTAMP, " +
+                    "duree DECIMAL(5,2), " +
+                    "FOREIGN KEY (id_avion) REFERENCES avions(id), " +
+                    "FOREIGN KEY (id_pilote) REFERENCES membres(id));";
+
+            stmt.execute(createVolsSQL);
+            System.out.println("[DB] Table Vols vérifiée/créée.");
+
             String createOpSQL = "CREATE TABLE IF NOT EXISTS operations (" +
                     "id INT PRIMARY KEY AUTO_INCREMENT, " +
                     "id_membre INT, " +
@@ -102,6 +132,22 @@ public class DatabaseManager {
             stmt.execute(insertOpData);
 
             System.out.println("[DB] Initialisation complète avec données de vol.");
+
+            // Dans initDatabase()
+            String createCotisSQL = "CREATE TABLE IF NOT EXISTS cotisations (" +
+                    "id INT PRIMARY KEY AUTO_INCREMENT, " +
+                    "id_membre INT, " +
+                    "date_paiement DATE, " +
+                    "montant DECIMAL(10,2), " +
+                    "annee INT, " +
+                    "FOREIGN KEY (id_membre) REFERENCES membres(id));";
+
+            String insertCotisData = "INSERT INTO cotisations (id_membre, date_paiement, montant, annee) " +
+                    "SELECT 1, '2026-01-15', 250.00, 2026 " +
+                    "WHERE NOT EXISTS (SELECT 1 FROM cotisations WHERE id=1);";
+
+            stmt.execute(createCotisSQL);
+            stmt.execute(insertCotisData);
 
         } catch (SQLException e) {
             System.err.println("[ERREUR DB] " + e.getMessage());

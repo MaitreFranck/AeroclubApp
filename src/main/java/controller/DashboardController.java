@@ -11,10 +11,25 @@ import java.io.IOException;
 
 public class DashboardController {
 
-    @FXML private Label welcomeLabel;
+    @FXML private Label welcomeLabel; // C'est le label gris en bas
+    @FXML private Label userDisplayLabel; // Nouveau Label pour le nom (à ajouter dans le FXML)
     @FXML private BorderPane mainPane;
 
-    // Méthodes de navigation
+    /**
+     * Cette méthode sera appelée par le LoginController pour passer les infos
+     */
+    public void setUserInfo(String prenom, String role) {
+        // On transforme "administrateur" en "ADMIN" pour le style
+        String roleDisplay = role.toUpperCase();
+        userDisplayLabel.setText("Bienvenue, " + prenom + " [" + roleDisplay + "]");
+
+        // Optionnel : Changer la couleur selon le rôle
+        if (role.equalsIgnoreCase("administrateur")) {
+            userDisplayLabel.setStyle("-fx-text-fill: #e67e22; -fx-font-weight: bold;");
+        }
+    }
+
+    // Tes méthodes de navigation restent les mêmes...
     @FXML private void showAvionsPage() { loadPage("/view/avions.fxml"); }
     @FXML private void showMembresPage() { loadPage("/view/membres.fxml"); }
     @FXML private void showVolsPage() { loadPage("/view/vols.fxml"); }
@@ -22,16 +37,12 @@ public class DashboardController {
     @FXML private void showOperationsPage() { loadPage("/view/operations.fxml"); }
     @FXML private void showCotisationsPage() { loadPage("/view/cotisations.fxml"); }
 
-    /**
-     * Méthode générique pour charger une page FXML au centre du BorderPane
-     */
     private void loadPage(String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
             mainPane.setCenter(root);
         } catch (IOException e) {
-            System.err.println("Erreur de chargement de la page : " + fxmlPath);
             e.printStackTrace();
         }
     }
@@ -40,7 +51,6 @@ public class DashboardController {
     private void handleLogout() {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/login.fxml"));
-            // Utilisation du mainPane pour récupérer la fenêtre (plus fiable)
             Stage stage = (Stage) mainPane.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("Aéroclub - Connexion");

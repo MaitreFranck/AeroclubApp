@@ -10,7 +10,9 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.awt.Desktop;
 import java.io.IOException;
+import java.net.URI;
 
 public class LoginController {
 
@@ -18,7 +20,6 @@ public class LoginController {
     @FXML private PasswordField passwordField;
     @FXML private Label messageLabel;
 
-    // On instancie directement pour éviter le NullPointerException au logout/login
     private final UserRepository userRepository = new UserRepository();
 
     @FXML
@@ -26,16 +27,26 @@ public class LoginController {
         String login = loginField.getText();
         String pass = passwordField.getText();
 
-        // Plus de risque de null ici
-        if (userRepository.checkLogin(login, pass)) {
+        // Récupération du rôle
+        String userRights = userRepository.getUserRights(login, pass);
+
+        if (userRights != null) {
+
+            // --- CONDITION DE RESTRICTION ---
+            if ("utilisateur".equalsIgnoreCase(userRights)) {
+                redirectToWebsite("https://francoisl.fr/projects/aeroclub/");
+                messageLabel.setTextFill(javafx.scene.paint.Color.ORANGE);
+                messageLabel.setText("Accès gestion réservé. Redirection web...");
+                return;
+            }
+
+            // --- ACCÈS AUTORISÉ (Administrateur ou Consulteur) ---
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/dashboard.fxml"));
                 Parent dashboardRoot = loader.load();
 
-                Scene dashboardScene = new Scene(dashboardRoot);
                 Stage stage = (Stage) loginField.getScene().getWindow();
-
-                stage.setScene(dashboardScene);
+                stage.setScene(new Scene(dashboardRoot));
                 stage.setTitle("Aéroclub - Tableau de bord");
                 stage.centerOnScreen();
                 stage.show();
@@ -47,6 +58,19 @@ public class LoginController {
         } else {
             messageLabel.setTextFill(javafx.scene.paint.Color.RED);
             messageLabel.setText("Identifiant ou mot de passe incorrect.");
+        }
+    }
+
+    /**
+     * Ouvre le navigateur par défaut vers l'URL spécifiée
+     */
+    private void redirectToWebsite(String url) {
+        try {
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+                Desktop.getDesktop().browse(new URI(url));
+            }
+        } catch (Exception e) {
+            System.err.println("Erreur redirection : " + e.getMessage());
         }
     }
 }

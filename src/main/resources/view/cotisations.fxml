@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="15" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="controller.CotisationsController">
+    <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+
+    <Label text="Suivi des Cotisations Annuelles" style="-fx-font-size: 24; -fx-font-weight: bold;"/>
+
+    <TableView fx:id="cotisationsTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colMembre" text="Membre" prefWidth="200"/>
+            <TableColumn fx:id="colAnnee" text="Année Cotisation" prefWidth="120"/>
+            <TableColumn fx:id="colDate" text="Date de Paiement" prefWidth="150"/>
+            <TableColumn fx:id="colMontant" text="Montant (€)" prefWidth="100"/>
+        </columns>
+    </TableView>
+</VBox>
