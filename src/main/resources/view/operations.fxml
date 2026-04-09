@@ -9,7 +9,9 @@
     <HBox spacing="10" alignment="CENTER_LEFT">
         <Label text="Journal de Caisse" style="-fx-font-size: 24; -fx-font-weight: bold;"/>
         <Region HBox.hgrow="ALWAYS" />
-        <Button text="+ Nouvelle Opération" style="-fx-background-color: #27ae60; -fx-text-fill: white;"/>
+        <Button text="+ Nouvelle Opération"
+                onAction="#handleAddOperation"
+                style="-fx-background-color: #27ae60; -fx-text-fill: white;"/>
     </HBox>
 
     <TableView fx:id="operationsTable" VBox.vgrow="ALWAYS">
