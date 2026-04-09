@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="15" prefWidth="350" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="controller.EditCotisationController">
+    <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+
+    <Label text="Enregistrer une Cotisation" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+
+    <GridPane hgap="10" vgap="15">
+        <Label text="Membre :" GridPane.rowIndex="0"/>
+        <ComboBox fx:id="membreCombo" GridPane.rowIndex="0" GridPane.columnIndex="1" maxWidth="Infinity" promptText="Sélectionner..."/>
+
+        <Label text="Année :" GridPane.rowIndex="1"/>
+        <TextField fx:id="anneeField" GridPane.rowIndex="1" GridPane.columnIndex="1" text="2026"/>
+
+        <Label text="Montant (€) :" GridPane.rowIndex="2"/>
+        <TextField fx:id="montantField" GridPane.rowIndex="2" GridPane.columnIndex="1" text="250.00"/>
+
+        <Label text="Mode :" GridPane.rowIndex="3"/>
+        <ComboBox fx:id="modeCombo" GridPane.rowIndex="3" GridPane.columnIndex="1" maxWidth="Infinity"/>
+    </GridPane>
+
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Annuler" onAction="#handleCancel"/>
+        <Button text="Valider le paiement" onAction="#handleSave"
+                style="-fx-background-color: #27ae60; -fx-text-fill: white;"/>
+    </HBox>
+</VBox>
