@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<VBox spacing="10" xmlns="http://javafx.com/javafx"
+<VBox spacing="15" xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="controller.MembresController">
     <padding>
@@ -17,6 +17,13 @@
         <Button text="Rafraîchir" onAction="#loadMembres" style="-fx-cursor: hand;"/>
     </HBox>
 
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <TextField fx:id="searchField" promptText="Rechercher un membre (nom, prénom, email...)" prefWidth="350" />
+        <Separator orientation="VERTICAL" />
+        <Button text="Modifier le membre" onAction="#handleEditMembre"
+                style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;"/>
+    </HBox>
+
     <TableView fx:id="membresTable" VBox.vgrow="ALWAYS">
         <columns>
             <TableColumn fx:id="colId" text="ID" prefWidth="40"/>
@@ -24,7 +31,7 @@
             <TableColumn fx:id="colPrenom" text="Prénom" prefWidth="100"/>
             <TableColumn fx:id="colEmail" text="Email" prefWidth="150"/>
             <TableColumn fx:id="colType" text="Type" prefWidth="90"/>
-            <TableColumn fx:id="colStatut" text="Statut" prefWidth="70"/>
+            <TableColumn fx:id="colStatut" text="Statut" prefWidth="80"/>
             <TableColumn fx:id="colSolde" text="Solde (€)" prefWidth="80"/>
             <TableColumn fx:id="colDroits" text="Droits" prefWidth="110"/>
             <TableColumn fx:id="colLicence" text="N° Licence" prefWidth="100"/>

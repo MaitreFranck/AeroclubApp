@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="20" style="-fx-background-color: #f4f7f6;" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml" fx:controller="controller.EditMembreController">
+    <padding>
+        <Insets top="25" right="25" bottom="25" left="25"/>
+    </padding>
+
+    <Label text="Édition du Membre" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+
+    <Separator/>
+
+    <GridPane hgap="15" vgap="12">
+        <columnConstraints>
+            <ColumnConstraints minWidth="100" prefWidth="120" />
+            <ColumnConstraints hgrow="ALWAYS" minWidth="200" prefWidth="300" />
+        </columnConstraints>
+
+        <Label text="Nom :" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField fx:id="nomField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+        <Label text="Prénom :" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <TextField fx:id="prenomField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+        <Label text="Email :" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <TextField fx:id="emailField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+        <Label text="Téléphone :" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <TextField fx:id="telField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+        <Label text="N° Licence :" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+        <TextField fx:id="licenceField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+        <Label text="Date Naissance :" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+        <DatePicker fx:id="dateNaissancePicker" GridPane.rowIndex="5" GridPane.columnIndex="1" maxWidth="Infinity"/>
+
+        <Label text="Type Membre :" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="typeCombo" GridPane.rowIndex="6" GridPane.columnIndex="1" maxWidth="Infinity"/>
+
+        <Label text="Statut :" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="statutCombo" GridPane.rowIndex="7" GridPane.columnIndex="1" maxWidth="Infinity"/>
+
+        <Label text="Droits App :" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="droitsCombo" GridPane.rowIndex="8" GridPane.columnIndex="1" maxWidth="Infinity"/>
+
+        <Label text="Solde (€) :" GridPane.rowIndex="9" GridPane.columnIndex="0"/>
+        <Spinner fx:id="soldeSpinner" GridPane.rowIndex="9" GridPane.columnIndex="1" maxWidth="Infinity"/>
+    </GridPane>
+
+    <Separator/>
+
+    <HBox spacing="15" alignment="CENTER_RIGHT">
+        <Button text="Annuler" onAction="#handleCancel"
+                style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-cursor: hand; -fx-padding: 8 20;"/>
+        <Button text="Sauvegarder" onAction="#handleSave"
+                style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand; -fx-padding: 8 20;"/>
+    </HBox>
+</VBox>

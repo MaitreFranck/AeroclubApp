@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
+import java.util.Map;
 
 public class LoginController {
 
@@ -27,10 +28,12 @@ public class LoginController {
         String login = loginField.getText();
         String pass = passwordField.getText();
 
-        // Récupération du rôle
-        String userRights = userRepository.getUserRights(login, pass);
+        // Récupération des infos (Prénom + Rôle)
+        Map<String, String> userData = userRepository.getUserInfo(login, pass);
 
-        if (userRights != null) {
+        if (userData != null) {
+            String userRights = userData.get("role");
+            String prenom = userData.get("prenom");
 
             // --- CONDITION DE RESTRICTION ---
             if ("utilisateur".equalsIgnoreCase(userRights)) {
@@ -45,6 +48,10 @@ public class LoginController {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/dashboard.fxml"));
                 Parent dashboardRoot = loader.load();
 
+                // On récupère le contrôleur du Dashboard pour lui passer les infos
+                DashboardController dashCtrl = loader.getController();
+                dashCtrl.setUserInfo(prenom, userRights);
+
                 Stage stage = (Stage) loginField.getScene().getWindow();
                 stage.setScene(new Scene(dashboardRoot));
                 stage.setTitle("Aéroclub - Tableau de bord");
@@ -52,6 +59,7 @@ public class LoginController {
                 stage.show();
 
             } catch (IOException e) {
+                messageLabel.setTextFill(javafx.scene.paint.Color.RED);
                 messageLabel.setText("Erreur de chargement du dashboard");
                 e.printStackTrace();
             }
@@ -61,9 +69,6 @@ public class LoginController {
         }
     }
 
-    /**
-     * Ouvre le navigateur par défaut vers l'URL spécifiée
-     */
     private void redirectToWebsite(String url) {
         try {
             if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {

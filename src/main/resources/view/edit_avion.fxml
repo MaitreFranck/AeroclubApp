@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="20" style="-fx-background-color: #f4f7f6;" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml" fx:controller="controller.EditAvionController">
+    <padding>
+        <Insets top="25" right="25" bottom="25" left="25"/>
+    </padding>
+
+    <Label text="Édition de l'Aéronef" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+
+    <Separator/>
+
+    <GridPane hgap="15" vgap="12">
+        <columnConstraints>
+            <ColumnConstraints minWidth="120" prefWidth="150" />
+            <ColumnConstraints hgrow="ALWAYS" minWidth="200" prefWidth="250" />
+        </columnConstraints>
+
+        <Label text="Immatriculation :" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField fx:id="immatField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+        <Label text="Modèle :" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <TextField fx:id="modeleField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+        <Label text="Catégorie (ID) :" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <Spinner fx:id="catSpinner" GridPane.rowIndex="2" GridPane.columnIndex="1" maxWidth="Infinity"/>
+
+        <Label text="Statut :" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="statutCombo" GridPane.rowIndex="3" GridPane.columnIndex="1" maxWidth="Infinity"/>
+
+        <Label text="Heures de Vol :" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+        <Spinner fx:id="heuresSpinner" GridPane.rowIndex="4" GridPane.columnIndex="1" maxWidth="Infinity"/>
+    </GridPane>
+
+    <Separator/>
+
+    <HBox spacing="15" alignment="CENTER_RIGHT">
+        <Button text="Annuler" onAction="#handleCancel"
+                style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-cursor: hand;"/>
+        <Button text="Enregistrer" onAction="#handleSave"
+                style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;"/>
+    </HBox>
+</VBox>

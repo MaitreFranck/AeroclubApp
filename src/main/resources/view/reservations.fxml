@@ -1,21 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<VBox spacing="15" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="controller.ReservationsController">
-    <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+<VBox spacing="15" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.ReservationsController">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
 
-    <Label text="Planning des Réservations" style="-fx-font-size: 24; -fx-font-weight: bold;"/>
+    <HBox alignment="CENTER_LEFT" spacing="20">
+        <Label text="Planning des Réservations" style="-fx-font-size: 24; -fx-font-weight: bold;"/>
+        <Region HBox.hgrow="ALWAYS" />
+        <Button text="Rafraîchir" onAction="#loadReservations" style="-fx-cursor: hand;"/>
+    </HBox>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <TextField fx:id="searchField" promptText="Filtrer par pilote ou avion..." prefWidth="300" />
+        <Separator orientation="VERTICAL" />
+        <Button text="+ Nouvelle Réservation" onAction="#handleAddReservation"
+                style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;"/>
+        <Button text="Modifier" onAction="#handleEditReservation"
+                style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;"/>
+        <Button text="Annuler / Supprimer" onAction="#handleDeleteReservation"
+                style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;"/>
+    </HBox>
 
     <TableView fx:id="reservationsTable" VBox.vgrow="ALWAYS">
         <columns>
             <TableColumn fx:id="colDate" text="Date" prefWidth="100"/>
             <TableColumn fx:id="colAvion" text="Avion" prefWidth="100"/>
-            <TableColumn fx:id="colMembre" text="Pilote" prefWidth="150"/>
-            <TableColumn fx:id="colDebut" text="Début" prefWidth="80"/>
-            <TableColumn fx:id="colFin" text="Fin" prefWidth="80"/>
-            <TableColumn fx:id="colStatut" text="Statut" prefWidth="100"/>
+            <TableColumn fx:id="colMembre" text="Pilote" prefWidth="180"/>
+            <TableColumn fx:id="colDebut" text="Début" prefWidth="90"/>
+            <TableColumn fx:id="colFin" text="Fin" prefWidth="90"/>
+            <TableColumn fx:id="colStatut" text="Statut" prefWidth="120"/>
         </columns>
+        <placeholder>
+            <Label text="Aucune réservation trouvée." />
+        </placeholder>
     </TableView>
 </VBox>

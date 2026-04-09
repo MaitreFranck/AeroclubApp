@@ -4,7 +4,6 @@ import model.Membre;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.time.LocalDate;
 
 public class MembreRepository {
 
@@ -45,6 +44,7 @@ public class MembreRepository {
 
     // Mettre à jour un membre existant (Update)
     public boolean updateMembre(Membre m) {
+        // On ne met pas à jour le password ici pour éviter de l'écraser par du vide
         String sql = "UPDATE membres SET nom=?, prenom=?, email=?, telephone=?, date_naissance=?, " +
                 "numero_licence=?, type_membre=?, statut=?, solde_compte=?, droits_utilisateurs=? " +
                 "WHERE id=?";
@@ -52,8 +52,8 @@ public class MembreRepository {
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            int i = prepareStatement(pstmt, m, null);
-            pstmt.setInt(i, m.getId());
+            int nextIndex = prepareStatement(pstmt, m, null);
+            pstmt.setInt(nextIndex, m.getId());
 
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -75,7 +75,7 @@ public class MembreRepository {
         }
     }
 
-    // --- Méthodes utilitaires privées pour éviter la répétition ---
+    // --- Méthodes utilitaires privées ---
 
     private Membre mapResultSetToMembre(ResultSet rs) throws SQLException {
         return new Membre(
@@ -107,8 +107,8 @@ public class MembreRepository {
 
         if (password != null) {
             pstmt.setString(11, password);
-            return 12; // Index pour l'ID si on fait un UPDATE après
+            return 12;
         }
-        return 11;
+        return 11; // Retourne l'index pour le WHERE id=? de l'update
     }
 }

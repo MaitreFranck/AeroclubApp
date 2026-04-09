@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserRepository {
 
@@ -52,5 +54,27 @@ public class UserRepository {
         } catch (SQLException e) {
             System.err.println("[DB Error] Impossible d'ajouter le membre : " + e.getMessage());
         }
+    }
+    public Map<String, String> getUserInfo(String email, String password) {
+        String sql = "SELECT prenom, droits_utilisateurs FROM membres WHERE email = ? AND password = ? AND statut = 'actif'";
+
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, email);
+            pstmt.setString(2, password);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    Map<String, String> data = new HashMap<>();
+                    data.put("prenom", rs.getString("prenom"));
+                    data.put("role", rs.getString("droits_utilisateurs"));
+                    return data;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

@@ -11,25 +11,16 @@ import java.io.IOException;
 
 public class DashboardController {
 
-    @FXML private Label welcomeLabel; // C'est le label gris en bas
-    @FXML private Label userDisplayLabel; // Nouveau Label pour le nom (à ajouter dans le FXML)
+    @FXML private Label userDisplayLabel; // Assure-toi que l'ID existe dans le FXML
     @FXML private BorderPane mainPane;
 
     /**
-     * Cette méthode sera appelée par le LoginController pour passer les infos
+     * Reçoit les infos du LoginController
      */
     public void setUserInfo(String prenom, String role) {
-        // On transforme "administrateur" en "ADMIN" pour le style
-        String roleDisplay = role.toUpperCase();
-        userDisplayLabel.setText("Bienvenue, " + prenom + " [" + roleDisplay + "]");
-
-        // Optionnel : Changer la couleur selon le rôle
-        if (role.equalsIgnoreCase("administrateur")) {
-            userDisplayLabel.setStyle("-fx-text-fill: #e67e22; -fx-font-weight: bold;");
-        }
+        userDisplayLabel.setText("Bienvenue, " + prenom + " [" + role.toUpperCase() + "]");
     }
 
-    // Tes méthodes de navigation restent les mêmes...
     @FXML private void showAvionsPage() { loadPage("/view/avions.fxml"); }
     @FXML private void showMembresPage() { loadPage("/view/membres.fxml"); }
     @FXML private void showVolsPage() { loadPage("/view/vols.fxml"); }

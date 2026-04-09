@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="20" style="-fx-background-color: #f4f7f6;" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml" fx:controller="controller.EditReservationController">
+    <padding>
+        <Insets top="25" right="25" bottom="25" left="25"/>
+    </padding>
+
+    <Label text="Détails de la Réservation" style="-fx-font-size: 20; -fx-font-weight: bold;"/>
+
+    <Separator/>
+
+    <GridPane hgap="15" vgap="12">
+        <columnConstraints>
+            <ColumnConstraints minWidth="100" prefWidth="120" />
+            <ColumnConstraints hgrow="ALWAYS" minWidth="200" prefWidth="300" />
+        </columnConstraints>
+
+        <Label text="Pilote :" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="membreCombo" GridPane.rowIndex="0" GridPane.columnIndex="1" maxWidth="Infinity" promptText="Sélectionner un membre"/>
+
+        <Label text="Avion :" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="avionCombo" GridPane.rowIndex="1" GridPane.columnIndex="1" maxWidth="Infinity" promptText="Sélectionner un appareil"/>
+
+        <Label text="Date :" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <DatePicker fx:id="datePicker" GridPane.rowIndex="2" GridPane.columnIndex="1" maxWidth="Infinity"/>
+
+        <Label text="Heure Début :" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <TextField fx:id="debutField" promptText="HH:mm" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+        <Label text="Heure Fin :" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+        <TextField fx:id="finField" promptText="HH:mm" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+        <Label text="Statut :" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="statutCombo" GridPane.rowIndex="5" GridPane.columnIndex="1" maxWidth="Infinity"/>
+    </GridPane>
+
+    <Separator/>
+
+    <HBox spacing="15" alignment="CENTER_RIGHT">
+        <Button text="Annuler" onAction="#handleCancel" style="-fx-background-color: #95a5a6; -fx-text-fill: white;"/>
+        <Button text="Confirmer" onAction="#handleSave" style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold;"/>
+    </HBox>
+</VBox>
