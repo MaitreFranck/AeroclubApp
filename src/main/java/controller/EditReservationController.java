@@ -95,14 +95,18 @@ public class EditReservationController {
 
             boolean success;
             if (reservation.getId() == 0) {
+                // AJOUT
                 success = resRepo.addReservation(m.getId(), a.getId(), reservation);
             } else {
-                success = resRepo.updateReservation(reservation);
+                // MODIFICATION (On passe maintenant les IDs du membre et de l'avion)
+                success = resRepo.updateReservation(m.getId(), a.getId(), reservation);
             }
 
             if (success) {
                 saveClicked = true;
                 close();
+            } else {
+                showAlert("Erreur SQL", "La mise à jour a échoué en base de données.");
             }
         } catch (DateTimeParseException e) {
             showAlert("Erreur", "Format d'heure invalide (HH:mm)");

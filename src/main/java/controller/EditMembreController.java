@@ -1,11 +1,10 @@
 package controller;
 
+import database.MembreRepository;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Membre;
-
-import java.time.LocalDate;
 
 public class EditMembreController {
 
@@ -14,6 +13,7 @@ public class EditMembreController {
     @FXML private TextField emailField;
     @FXML private TextField telField;
     @FXML private TextField licenceField;
+    @FXML private PasswordField passwordField;
     @FXML private DatePicker dateNaissancePicker;
     @FXML private ComboBox<String> typeCombo;
     @FXML private ComboBox<String> statutCombo;
@@ -22,24 +22,20 @@ public class EditMembreController {
 
     private Membre membre;
     private boolean saveClicked = false;
+    private final MembreRepository repo = new MembreRepository();
 
     @FXML
     public void initialize() {
-        // Initialisation des listes déroulantes
         typeCombo.getItems().addAll("pilote", "eleve", "instructeur", "admin");
         statutCombo.getItems().addAll("actif", "inactif");
         droitsCombo.getItems().addAll("utilisateur", "consulteur", "administrateur");
 
-        // Configuration du spinner pour le solde (min, max, initial, step)
         SpinnerValueFactory<Double> valueFactory =
                 new SpinnerValueFactory.DoubleSpinnerValueFactory(-10000.0, 10000.0, 0.0, 10.0);
         soldeSpinner.setValueFactory(valueFactory);
         soldeSpinner.setEditable(true);
     }
 
-    /**
-     * Remplit les champs avec les données du membre sélectionné
-     */
     public void setMembre(Membre membre) {
         this.membre = membre;
 
@@ -55,22 +51,15 @@ public class EditMembreController {
         soldeSpinner.getValueFactory().setValue(membre.getSoldeCompte());
     }
 
-    public boolean isSaveClicked() {
-        return saveClicked;
-    }
+    public boolean isSaveClicked() { return saveClicked; }
 
     @FXML
     private void handleSave() {
-        // Validation simple
-        if (nomField.getText().isEmpty() || prenomField.getText().isEmpty() || emailField.getText().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Champs invalides");
-            alert.setHeaderText("Veuillez remplir les champs obligatoires");
-            alert.showAndWait();
+        if (nomField.getText().isEmpty() || emailField.getText().isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Le nom et l'email sont obligatoires.").show();
             return;
         }
 
-        // Mise à jour de l'objet membre
         membre.setNom(nomField.getText());
         membre.setPrenom(prenomField.getText());
         membre.setEmail(emailField.getText());
@@ -82,17 +71,23 @@ public class EditMembreController {
         membre.setDroitsUtilisateurs(droitsCombo.getValue());
         membre.setSoldeCompte(soldeSpinner.getValue());
 
-        saveClicked = true;
-        closeWindow();
+        if (!passwordField.getText().isEmpty()) {
+            membre.setMotDePasse(passwordField.getText());
+        }
+
+        boolean success = (membre.getId() == 0) ? repo.addMembre(membre) : repo.updateMembre(membre);
+
+        if (success) {
+            saveClicked = true;
+            closeWindow();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Erreur lors de la sauvegarde.").show();
+        }
     }
 
-    @FXML
-    private void handleCancel() {
-        closeWindow();
-    }
+    @FXML private void handleCancel() { closeWindow(); }
 
     private void closeWindow() {
-        Stage stage = (Stage) nomField.getScene().getWindow();
-        stage.close();
+        ((Stage) nomField.getScene().getWindow()).close();
     }
 }

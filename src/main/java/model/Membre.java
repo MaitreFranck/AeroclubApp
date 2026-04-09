@@ -10,14 +10,15 @@ public class Membre {
     private String telephone;
     private LocalDate dateNaissance;
     private String numeroLicence;
-    private String typeMembre; // pilote, eleve, instructeur, admin
-    private String statut;     // actif, inactif
+    private String typeMembre;
+    private String statut;
     private double soldeCompte;
-    private String droitsUtilisateurs; // utilisateur, consulteur, administrateur
+    private String droitsUtilisateurs;
+    private String motDePasse; // AJOUT
 
     public Membre(int id, String nom, String prenom, String email, String telephone,
                   LocalDate dateNaissance, String numeroLicence, String typeMembre,
-                  String statut, double soldeCompte, String droitsUtilisateurs) {
+                  String statut, double soldeCompte, String droitsUtilisateurs, String motDePasse) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -29,6 +30,7 @@ public class Membre {
         this.statut = statut;
         this.soldeCompte = soldeCompte;
         this.droitsUtilisateurs = droitsUtilisateurs;
+        this.motDePasse = motDePasse;
     }
 
     // Getters
@@ -43,6 +45,7 @@ public class Membre {
     public String getStatut() { return statut; }
     public double getSoldeCompte() { return soldeCompte; }
     public String getDroitsUtilisateurs() { return droitsUtilisateurs; }
+    public String getMotDePasse() { return motDePasse; }
 
     // Setters
     public void setNom(String nom) { this.nom = nom; }
@@ -55,4 +58,5 @@ public class Membre {
     public void setStatut(String statut) { this.statut = statut; }
     public void setSoldeCompte(double soldeCompte) { this.soldeCompte = soldeCompte; }
     public void setDroitsUtilisateurs(String droits) { this.droitsUtilisateurs = droits; }
+    public void setMotDePasse(String motDePasse) { this.motDePasse = motDePasse; }
 }

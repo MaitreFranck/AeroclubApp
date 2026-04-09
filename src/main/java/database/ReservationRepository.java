@@ -53,15 +53,17 @@ public class ReservationRepository {
         }
     }
 
-    public boolean updateReservation(Reservation r) {
-        String sql = "UPDATE reservations SET date_reservation=?, heure_debut=?, heure_fin=?, statut=? WHERE id=?";
+    public boolean updateReservation(int idMembre, int idAvion, Reservation r) {
+        String sql = "UPDATE reservations SET id_membre=?, id_avion=?, date_reservation=?, heure_debut=?, heure_fin=?, statut=? WHERE id=?";
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setDate(1, Date.valueOf(r.getDate()));
-            pstmt.setTime(2, Time.valueOf(r.getHeureDebut()));
-            pstmt.setTime(3, Time.valueOf(r.getHeureFin()));
-            pstmt.setString(4, r.getStatut());
-            pstmt.setInt(5, r.getId());
+            pstmt.setInt(1, idMembre);
+            pstmt.setInt(2, idAvion);
+            pstmt.setDate(3, Date.valueOf(r.getDate()));
+            pstmt.setTime(4, Time.valueOf(r.getHeureDebut()));
+            pstmt.setTime(5, Time.valueOf(r.getHeureFin()));
+            pstmt.setString(6, r.getStatut());
+            pstmt.setInt(7, r.getId());
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
