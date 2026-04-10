@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Membre;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class EditMembreController {
 
@@ -60,6 +61,11 @@ public class EditMembreController {
             return;
         }
 
+        if (membre.getId() == 0 && passwordField.getText().isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Un mot de passe est obligatoire pour un nouveau membre.").show();
+            return;
+        }
+
         membre.setNom(nomField.getText());
         membre.setPrenom(prenomField.getText());
         membre.setEmail(emailField.getText());
@@ -72,7 +78,10 @@ public class EditMembreController {
         membre.setSoldeCompte(soldeSpinner.getValue());
 
         if (!passwordField.getText().isEmpty()) {
-            membre.setMotDePasse(passwordField.getText());
+            String hash = BCrypt.hashpw(passwordField.getText(), BCrypt.gensalt());
+            membre.setMotDePasse(hash);
+        } else {
+            membre.setMotDePasse(null);
         }
 
         boolean success = (membre.getId() == 0) ? repo.addMembre(membre) : repo.updateMembre(membre);

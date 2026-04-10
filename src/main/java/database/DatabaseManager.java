@@ -127,7 +127,7 @@ public class DatabaseManager {
 
             // Admin par défaut
             stmt.executeUpdate("INSERT INTO membres (nom, prenom, email, password, droits_utilisateurs, statut) " +
-                    "SELECT 'Admin', 'Aeroclub', 'admin', '123', 'administrateur', 'actif' " +
+                    "SELECT 'Admin', 'Aeroclub', 'admin', '$2a$10$.bGKLqIW4X.C4MDQt69kne7sgEx.HkXcvfJxRpqiTYJPYow4XU732', 'administrateur', 'actif' " +
                     "WHERE NOT EXISTS (SELECT 1 FROM membres WHERE email = 'admin');");
 
             // Avions de test
