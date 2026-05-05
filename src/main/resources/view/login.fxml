@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" spacing="15.0" prefWidth="400.0" prefHeight="300.0"
+<VBox alignment="CENTER" spacing="15.0" prefWidth="400.0" prefHeight="350.0"
       xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="controller.LoginController">
 
@@ -31,6 +31,9 @@
 
     <Button text="Se connecter" onAction="#handleLogin"
             prefWidth="Infinity" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-cursor: hand;" />
+
+    <Button fx:id="btnCreerCompte" text="Créer un compte" onAction="#handleCreerCompte"
+            prefWidth="Infinity" style="-fx-background-color: transparent; -fx-text-fill: #2196F3; -fx-cursor: hand;" />
 
     <Label fx:id="messageLabel" textFill="#e74c3c" />
 

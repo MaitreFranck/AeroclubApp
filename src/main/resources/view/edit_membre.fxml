@@ -3,7 +3,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<ScrollPane fitToWidth="true" prefHeight="600" prefWidth="500" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="controller.EditMembreController">
+<ScrollPane fitToWidth="true" prefHeight="650" prefWidth="500" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="controller.EditMembreController">
     <VBox spacing="15" style="-fx-background-color: #f4f7f6;">
         <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
 
@@ -46,8 +46,11 @@
             <Label text="Droits :" GridPane.rowIndex="9" />
             <ComboBox fx:id="droitsCombo" GridPane.rowIndex="9" GridPane.columnIndex="1" maxWidth="Infinity"/>
 
-            <Label text="Solde (€) :" GridPane.rowIndex="10" />
-            <Spinner fx:id="soldeSpinner" GridPane.rowIndex="10" GridPane.columnIndex="1" maxWidth="Infinity" editable="true"/>
+            <Label text="État validation :" GridPane.rowIndex="10" />
+            <ComboBox fx:id="etatCombo" GridPane.rowIndex="10" GridPane.columnIndex="1" maxWidth="Infinity"/>
+
+            <Label text="Solde (€) :" GridPane.rowIndex="11" />
+            <Spinner fx:id="soldeSpinner" GridPane.rowIndex="11" GridPane.columnIndex="1" maxWidth="Infinity" editable="true"/>
         </GridPane>
 
         <HBox spacing="10" alignment="CENTER_RIGHT">

@@ -19,6 +19,7 @@ public class EditMembreController {
     @FXML private ComboBox<String> typeCombo;
     @FXML private ComboBox<String> statutCombo;
     @FXML private ComboBox<String> droitsCombo;
+    @FXML private ComboBox<String> etatCombo; // Indispensable pour la validation
     @FXML private Spinner<Double> soldeSpinner;
 
     private Membre membre;
@@ -30,6 +31,7 @@ public class EditMembreController {
         typeCombo.getItems().addAll("pilote", "eleve", "instructeur", "admin");
         statutCombo.getItems().addAll("actif", "inactif");
         droitsCombo.getItems().addAll("utilisateur", "consulteur", "administrateur");
+        etatCombo.getItems().addAll("a_valider", "valide", "invalide");
 
         SpinnerValueFactory<Double> valueFactory =
                 new SpinnerValueFactory.DoubleSpinnerValueFactory(-10000.0, 10000.0, 0.0, 10.0);
@@ -49,6 +51,7 @@ public class EditMembreController {
         typeCombo.setValue(membre.getTypeMembre());
         statutCombo.setValue(membre.getStatut());
         droitsCombo.setValue(membre.getDroitsUtilisateurs());
+        etatCombo.setValue(membre.getEtatValCompte()); // IMPORTANT
         soldeSpinner.getValueFactory().setValue(membre.getSoldeCompte());
     }
 
@@ -61,11 +64,6 @@ public class EditMembreController {
             return;
         }
 
-        if (membre.getId() == 0 && passwordField.getText().isEmpty()) {
-            new Alert(Alert.AlertType.ERROR, "Un mot de passe est obligatoire pour un nouveau membre.").show();
-            return;
-        }
-
         membre.setNom(nomField.getText());
         membre.setPrenom(prenomField.getText());
         membre.setEmail(emailField.getText());
@@ -75,13 +73,12 @@ public class EditMembreController {
         membre.setTypeMembre(typeCombo.getValue());
         membre.setStatut(statutCombo.getValue());
         membre.setDroitsUtilisateurs(droitsCombo.getValue());
+        membre.setEtatValCompte(etatCombo.getValue());
         membre.setSoldeCompte(soldeSpinner.getValue());
 
         if (!passwordField.getText().isEmpty()) {
             String hash = BCrypt.hashpw(passwordField.getText(), BCrypt.gensalt());
             membre.setMotDePasse(hash);
-        } else {
-            membre.setMotDePasse(null);
         }
 
         boolean success = (membre.getId() == 0) ? repo.addMembre(membre) : repo.updateMembre(membre);

@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -20,6 +21,7 @@ public class LoginController {
     @FXML private TextField loginField;
     @FXML private PasswordField passwordField;
     @FXML private Label messageLabel;
+    @FXML private Button btnCreerCompte;
 
     private final UserRepository userRepository = new UserRepository();
 
@@ -28,14 +30,19 @@ public class LoginController {
         String login = loginField.getText();
         String pass = passwordField.getText();
 
-        // Récupération des infos (Prénom + Rôle)
         Map<String, String> userData = userRepository.getUserInfo(login, pass);
 
         if (userData != null) {
             String userRights = userData.get("role");
             String prenom = userData.get("prenom");
+            String etat_val_compte = userData.get("etat_val_compte");
 
-            // --- CONDITION DE RESTRICTION ---
+            if ("a_valider".equalsIgnoreCase(etat_val_compte)) {
+                messageLabel.setTextFill(javafx.scene.paint.Color.ORANGE);
+                messageLabel.setText("Compte en attente de validation, veuillez patienter.");
+                return;
+            }
+
             if ("utilisateur".equalsIgnoreCase(userRights)) {
                 redirectToWebsite("https://francoisl.fr/projects/aeroclub/");
                 messageLabel.setTextFill(javafx.scene.paint.Color.ORANGE);
@@ -43,12 +50,9 @@ public class LoginController {
                 return;
             }
 
-            // --- ACCÈS AUTORISÉ (Administrateur ou Consulteur) ---
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/dashboard.fxml"));
                 Parent dashboardRoot = loader.load();
-
-                // On récupère le contrôleur du Dashboard pour lui passer les infos
                 DashboardController dashCtrl = loader.getController();
                 dashCtrl.setUserInfo(prenom, userRights);
 
@@ -57,7 +61,6 @@ public class LoginController {
                 stage.setTitle("Aéroclub - Tableau de bord");
                 stage.centerOnScreen();
                 stage.show();
-
             } catch (IOException e) {
                 messageLabel.setTextFill(javafx.scene.paint.Color.RED);
                 messageLabel.setText("Erreur de chargement du dashboard");
@@ -66,6 +69,22 @@ public class LoginController {
         } else {
             messageLabel.setTextFill(javafx.scene.paint.Color.RED);
             messageLabel.setText("Identifiant ou mot de passe incorrect.");
+        }
+    }
+
+    @FXML
+    private void handleCreerCompte() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/inscription.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) btnCreerCompte.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Inscription - Aéroclub");
+            stage.show();
+        } catch (IOException e) {
+            messageLabel.setTextFill(javafx.scene.paint.Color.RED);
+            messageLabel.setText("Erreur : Impossible d'ouvrir la page d'inscription.");
+            e.printStackTrace();
         }
     }
 

@@ -13,11 +13,17 @@
     </HBox>
 
     <HBox spacing="10" alignment="CENTER_LEFT">
-        <TextField fx:id="searchField" promptText="Rechercher par nom ou licence..." prefWidth="300" />
+        <TextField fx:id="searchField" promptText="Rechercher par nom ou licence..." prefWidth="250" />
+
+        <ComboBox fx:id="filterCombo" promptText="Filtrer par état" prefWidth="150" />
+
         <Separator orientation="VERTICAL" />
+
         <Button text="+ Nouveau Membre" onAction="#handleAddMembre"
                 style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold;"/>
         <Button text="Modifier" onAction="#handleEditMembre" />
+        <Button text="Valider Compte" onAction="#handleValiderCompte"
+                style="-fx-background-color: #3498db; -fx-text-fill: white;"/>
         <Button text="Supprimer" onAction="#handleDeleteMembre"
                 style="-fx-background-color: #e74c3c; -fx-text-fill: white;"/>
     </HBox>
@@ -30,6 +36,7 @@
             <TableColumn fx:id="colLicence" text="N° Licence" prefWidth="100"/>
             <TableColumn fx:id="colType" text="Type" prefWidth="90"/>
             <TableColumn fx:id="colStatut" text="Statut" prefWidth="80"/>
+            <TableColumn fx:id="colEtat" text="État" prefWidth="90"/>
             <TableColumn fx:id="colSolde" text="Solde" prefWidth="80"/>
             <TableColumn fx:id="colDroits" text="Droits" prefWidth="110"/>
             <TableColumn fx:id="colEmail" text="Email" prefWidth="150"/>

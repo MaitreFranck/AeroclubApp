@@ -28,8 +28,8 @@ public class MembresController {
     @FXML private TableColumn<Membre, String> colStatut;
     @FXML private TableColumn<Membre, Double> colSolde;
     @FXML private TableColumn<Membre, String> colDroits;
-
-    @FXML private TextField searchField;
+    @FXML private TableColumn<Membre, String> colEtat;
+    @FXML private ComboBox<String> filterCombo;
 
     private final MembreRepository repo = new MembreRepository();
     private final ObservableList<Membre> masterData = FXCollections.observableArrayList();
@@ -45,23 +45,13 @@ public class MembresController {
         colType.setCellValueFactory(new PropertyValueFactory<>("typeMembre"));
         colStatut.setCellValueFactory(new PropertyValueFactory<>("statut"));
         colDroits.setCellValueFactory(new PropertyValueFactory<>("droitsUtilisateurs"));
+        colEtat.setCellValueFactory(new PropertyValueFactory<>("etatValCompte"));
 
-        // Formatage spécial pour le solde (€)
         colSolde.setCellValueFactory(new PropertyValueFactory<>("soldeCompte"));
-        colSolde.setCellFactory(column -> new TableCell<Membre, Double>() {
-            @Override
-            protected void updateItem(Double item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText(null);
-                } else {
-                    setText(String.format("%.2f €", item));
-                    // Optionnel : afficher en rouge si solde négatif
-                    if (item < 0) setStyle("-fx-text-fill: red;");
-                    else setStyle("-fx-text-fill: green;");
-                }
-            }
-        });
+
+        filterCombo.getItems().addAll("Tous", "a_valider", "valide", "invalide");
+        filterCombo.setValue("Tous");
+        filterCombo.setOnAction(e -> applyFilter());
 
         loadMembres();
     }
@@ -72,9 +62,13 @@ public class MembresController {
         membresTable.setItems(masterData);
     }
 
+    private void applyFilter() {
+        masterData.setAll(repo.getMembresByEtat(filterCombo.getValue()));
+    }
+
     @FXML
     private void handleAddMembre() {
-        Membre nouveau = new Membre(0, "", "", "", "", LocalDate.now(), "", "pilote", "actif", 0.0, "utilisateur", "");
+        Membre nouveau = new Membre(0, "", "", "", "", LocalDate.now(), "", "pilote", "inactif", 0.0, "utilisateur", "", "a_valider");
         openEditDialog(nouveau, "Nouveau Membre");
     }
 
@@ -83,6 +77,16 @@ public class MembresController {
         Membre selected = membresTable.getSelectionModel().getSelectedItem();
         if (selected != null) {
             openEditDialog(selected, "Modifier Membre");
+        }
+    }
+
+    @FXML
+    private void handleValiderCompte() {
+        Membre selected = membresTable.getSelectionModel().getSelectedItem();
+        if (selected != null) {
+            if(repo.updateEtatMembre(selected.getId(), "valide")) {
+                loadMembres();
+            }
         }
     }
 

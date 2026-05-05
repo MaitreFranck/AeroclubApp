@@ -14,11 +14,12 @@ public class Membre {
     private String statut;
     private double soldeCompte;
     private String droitsUtilisateurs;
-    private String motDePasse; // AJOUT
+    private String motDePasse;
+    private String etatValCompte;
 
     public Membre(int id, String nom, String prenom, String email, String telephone,
                   LocalDate dateNaissance, String numeroLicence, String typeMembre,
-                  String statut, double soldeCompte, String droitsUtilisateurs, String motDePasse) {
+                  String statut, double soldeCompte, String droitsUtilisateurs, String motDePasse, String etatValCompte) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -31,9 +32,9 @@ public class Membre {
         this.soldeCompte = soldeCompte;
         this.droitsUtilisateurs = droitsUtilisateurs;
         this.motDePasse = motDePasse;
+        this.etatValCompte = etatValCompte;
     }
 
-    // Getters
     public int getId() { return id; }
     public String getNom() { return nom; }
     public String getPrenom() { return prenom; }
@@ -46,8 +47,8 @@ public class Membre {
     public double getSoldeCompte() { return soldeCompte; }
     public String getDroitsUtilisateurs() { return droitsUtilisateurs; }
     public String getMotDePasse() { return motDePasse; }
+    public String getEtatValCompte() { return etatValCompte; }
 
-    // Setters
     public void setNom(String nom) { this.nom = nom; }
     public void setPrenom(String prenom) { this.prenom = prenom; }
     public void setEmail(String email) { this.email = email; }
@@ -59,4 +60,5 @@ public class Membre {
     public void setSoldeCompte(double soldeCompte) { this.soldeCompte = soldeCompte; }
     public void setDroitsUtilisateurs(String droits) { this.droitsUtilisateurs = droits; }
     public void setMotDePasse(String motDePasse) { this.motDePasse = motDePasse; }
+    public void setEtatValCompte(String etat) { this.etatValCompte = etat; }
 }
